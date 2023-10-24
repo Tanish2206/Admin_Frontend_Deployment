@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useCallback} from 'react';
 import {
   Button,
   Modal,
@@ -86,20 +86,18 @@ const CreateUpdateDesigner: React.FC<UserModalProps> = ({
   const [formData, setFormData] = useState<Designer>(initialFormData);
   const [showPassword, setShowPassword] = useState(false);
 
+  const resetForm = useCallback(() => {
+    setFormData(initialFormData);
+  }, [setFormData]);
+  
   useEffect(() => {
     if (isOpen && editUser) {
       setFormData(editUser);
     } else {
       resetForm();
     }
-  }, [isOpen, editUser]);
-
+  }, [isOpen, editUser, resetForm]);
   
-
-  const resetForm = () => {
-    
-    setFormData(initialFormData);
-  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
